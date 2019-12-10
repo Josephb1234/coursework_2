@@ -3,12 +3,7 @@ pipeline {
          stages {
                  stage('One') {
                  steps {
-                     echo 'Hi, this is Zulaikha from edureka'
-                 }
-                 }
-                 stage('Two') {
-                 steps {
-                    input('Do you want to proceed?')
+                     echo 'Hi, lets begin your pipeline!'
                  }
                  }
 				 stage('Sonarqube') {
@@ -23,17 +18,7 @@ pipeline {
 								waitForQualityGate abortPipeline: true
 								}
 						}
-				} 
-                 stage('Three') {
-                 when {
-                       not {
-                            branch "master"
-                       }
-                 }
-                 steps {
-                       echo "Hello"
-                 }
-                 }
+					}
                  stage('Four') {
                  parallel { 
                             stage('Unit Test') {
