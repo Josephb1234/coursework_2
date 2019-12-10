@@ -3,7 +3,12 @@ pipeline {
          stages {
                  stage('One') {
                  steps {
-                     echo 'Hi, lets begin your pipeline!'
+                     echo 'Hi, lets start your pipeline!'
+                 }
+                 }
+                 stage('Two') {
+                 steps {
+                    input('Do you want to proceed?')
                  }
                  }
 				 stage('Sonarqube') {
@@ -12,13 +17,23 @@ pipeline {
 					}
 						steps {
 							withSonarQubeEnv('sonarqube') {
-							sh "${scannerHome}/bin/sonar-scanner"
+								sh "${scannerHome}/bin/sonar-scanner"
 							}
-								timeout(time: 10, unit: 'MINUTES') {
-								waitForQualityGate abortPipeline: true
-								}
+							timeout(time: 10, unit: 'MINUTES') {
+						waitForQualityGate abortPipeline: true
 						}
 					}
+				} 
+                 stage('Three') {
+                 when {
+                       not {
+                            branch "master"
+                       }
+                 }
+                 steps {
+                       echo "Hello"
+                 }
+                 }
                  stage('Four') {
                  parallel { 
                             stage('Unit Test') {
