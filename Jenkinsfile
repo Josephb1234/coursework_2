@@ -8,24 +8,24 @@ pipeline {
                  }
                  stage('Two') {
                  steps {
-                    input('Do you want to proceed')
+                    input('Do you want to proceed?')
                  }
                  }
                  stage('Three') {
                  when {
                        not {
-                            branch master
+                            branch "master"
                        }
                  }
                  steps {
-                       echo Hello
+                       echo "Hello"
                  }
                  }
                  stage('Four') {
                  parallel { 
                             stage('Unit Test') {
                            steps {
-                                echo Running the unit test...
+                                echo "Running the unit test..."
                            }
                            }
                             stage('Integration test') {
@@ -36,7 +36,7 @@ pipeline {
                                            }
                                     }
                               steps {
-                                echo Running the integration test...
+                                echo "Running the integration test..."
                               }
                            }
                            }
