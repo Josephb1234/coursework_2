@@ -1,41 +1,24 @@
 pipeline {
 		agent any
 			stages {
-				stage('One') {
+					stage('One') {
+						steps {
+						echo 'Hi, lets start your pipeline!'
+						}
+						}
+					stage('Sonarqube') {
+						environment {
+						scannerHome = tool 'SonarQubeScanner'
+						}
 					steps {
-					echo 'Hi, lets start your pipeline!'
-					}
-					}						
-				stage('Three') {
-				when {
-						not {
-							branch "master"
+						withSonarQubeEnv('sonarqube') {
+							sh "${scannerHome}/bin/sonar-scanner"
+						}
+							timeout(time: 10, unit: 'MINUTES') {
+							waitForQualityGate abortPipeline: true
 							}
-					}
-					steps {
-						echo "Hello"
-					}
-					}
-					stage('Four') {
-					parallel { 
-							stage('Unit Test') {
-							steps {
-								echo "Running the unit test..."
-							}
-							}
-							stage('Integration test') {
-							agent {
-								docker {
-									reuseNode true
-									image 'ubuntu'
-											}
-									}
-								steps {
-									echo "Running the integration test..."
-								}
-							}
-							}
-							}
+						}
+					}	
 				}
 }
 
