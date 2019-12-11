@@ -46,7 +46,7 @@ node {
 						}
 
 						stage('Build image') {
-							app = docker.build("getintodevops/hellonode")
+							app = docker.build("Josephb1234/coursework_2")
 						}
 
 						stage('Test image') {
