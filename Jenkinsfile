@@ -5,30 +5,7 @@ pipeline {
 					steps {
 					echo 'Hi, lets start your pipeline!'
 					}
-					}
-node {
-					def app
-						stage('Clone repository') {
-							checkout scm
-						}
-
-						stage('Build image') {
-							app = docker.build("getintodevops/hellonode")
-						}
-
-						stage('Test image') {
-							app.inside {
-								sh 'echo "Tests passed"'
-							}
-						}
-
-						stage('Push image') {
-							docker.withRegistry('https://registry.hub.docker.com', 'josephb123') {
-								app.push("${env.BUILD_NUMBER}")
-								app.push("latest")
-							}
-						}
-				}						
+					}						
 				stage('Three') {
 				when {
 						not {
@@ -61,3 +38,27 @@ node {
 							}
 				}
 }
+
+node {
+					def app
+						stage('Clone repository') {
+							checkout scm
+						}
+
+						stage('Build image') {
+							app = docker.build("getintodevops/hellonode")
+						}
+
+						stage('Test image') {
+							app.inside {
+								sh 'echo "Tests passed"'
+							}
+						}
+
+						stage('Push image') {
+							docker.withRegistry('https://registry.hub.docker.com', 'josephb123') {
+								app.push("${env.BUILD_NUMBER}")
+								app.push("latest")
+							}
+						}
+				}
