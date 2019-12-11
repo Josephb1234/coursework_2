@@ -6,7 +6,7 @@ pipeline {
 					echo 'Hi, lets start your pipeline!'
 					}
 					}
-					node {
+node {
 					def app
 						stage('Clone repository') {
 							checkout scm
