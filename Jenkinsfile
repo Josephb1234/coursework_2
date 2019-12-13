@@ -1,11 +1,6 @@
 pipeline {
 		agent any
 			stages {
-					stage('One') {
-						steps {
-						echo 'Hi, lets start your pipeline!'
-						}
-						}
 					stage('Sonarqube') {
 						environment {
 						scannerHome = tool 'SonarQubeScanner'
